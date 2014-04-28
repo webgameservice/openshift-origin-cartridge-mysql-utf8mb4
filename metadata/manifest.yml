@@ -62,5 +62,5 @@ Version-Overrides:
     - mysql-5.1
     - mysql
     - mysql-singleton-master
-
-Source-Url: https://github.com/yanpzhan/cartridge-mysql.git
+Source-Url: https://www.baidu.com
+#Source-Url: https://github.com/yanpzhan/cartridge-mysql.git
