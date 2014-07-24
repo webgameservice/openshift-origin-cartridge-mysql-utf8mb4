@@ -64,4 +64,5 @@ Version-Overrides:
     - mysql-singleton-master
 #Source-Url: https://github.com/yanpzhan/1.git
 #Source-Url: https://www.baidu.com
-Source-Url: https://github.com/yanpzhan/cartridge-mysql.git
+#Source-Url: https://github.com/yanpzhan/cartridge-mysql.git
+Source-Url: file:///root/phpcart/cartridge-mysql/
