@@ -18,7 +18,6 @@ Categories:
 - service
 - database
 - embedded
-- external
 Website: http://www.mysql.com
 Help-Topics:
   Building with MySQL: https://www.openshift.com/developers/mysql
@@ -47,8 +46,8 @@ Publishes:
   publish-ld-library-path-info:
     Type: ENV:NET_TCP:db:ld-library-path-info
 Scaling:
-  Min: 0
-  Max: 0
+  Min: 1
+  Max: 1
 Endpoints:
 - Private-IP-Name: DB_HOST
   Private-Port-Name: DB_PORT
