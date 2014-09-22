@@ -18,6 +18,7 @@ Categories:
 - service
 - database
 - embedded
+- external
 Website: http://www.mysql.com
 Help-Topics:
   Building with MySQL: https://www.openshift.com/developers/mysql
@@ -46,8 +47,8 @@ Publishes:
   publish-ld-library-path-info:
     Type: ENV:NET_TCP:db:ld-library-path-info
 Scaling:
-  Min: 1
-  Max: 1
+  Min: 0
+  Max: 0
 Endpoints:
 - Private-IP-Name: DB_HOST
   Private-Port-Name: DB_PORT
@@ -64,5 +65,5 @@ Version-Overrides:
     - mysql-singleton-master
 #Source-Url: https://github.com/yanpzhan/1.git
 #Source-Url: https://www.baidu.com
-#Source-Url: https://github.com/yanpzhan/cartridge-mysql.git
-Source-Url: file:///root/phpcart/cartridge-mysql/
+Source-Url: https://github.com/yanpzhan/cartridge-mysql.git
+#Source-Url: file:///root/phpcart/cartridge-mysql/
