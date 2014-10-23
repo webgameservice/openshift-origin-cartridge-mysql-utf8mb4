@@ -11,7 +11,7 @@ Versions:
 Cartridge-Version: 0.2.12
 Compatible-Versions:
 - 0.2.11
-Cartridge-Vendor: yanpzh
+Cartridge-Vendor: amgohan
 License: GPL
 Vendor: Oracle
 Categories:
@@ -62,7 +62,4 @@ Version-Overrides:
     - mysql-5.1
     - mysql
     - mysql-singleton-master
-#Source-Url: https://github.com/yanpzhan/1.git
-#Source-Url: https://www.baidu.com
-Source-Url: https://github.com/yanpzhan/cartridge-mysql.git
-#Source-Url: file:///root/phpcart/cartridge-mysql/
+Source-Url: https://github.com/amgohan/cartridge-mysql.git
