@@ -8,8 +8,25 @@
 # max_connections -> OPENSHIFT_MYSQL_MAX_CONNECTIONS
 # ft_min_word_len -> OPENSHIFT_MYSQL_FT_MIN_WORD_LEN
 # ft_max_word_len -> OPENSHIFT_MYSQL_FT_MAX_WORD_LEN
+## amgohan - start
+# default-character-set -> OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET
+# character-set-client-handshake -> OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE
+# character-set-server -> OPENSHIFT_MYSQL_CHARACTER_SET_SERVER
+# collation-server -> OPENSHIFT_MYSQL_COLLATION_SERVER
+## amgohan - end
+
+## amgohan - start
+[client]
+default-character-set = <%= ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] ? ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] : 'utf8' %>
+## amgohan - end
 
 [mysqld]
+## amgohan - start
+character-set-client-handshake = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] : 'TRUE' %>
+character-set-server = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] : 'latin1' %>
+collation-server = <%= ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] ? ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] : 'latin1_swedish_ci' %>
+## amgohan - end
+
 datadir=<%= ENV['OPENSHIFT_MYSQL_DIR'] %>data/
 socket=<%= ENV['OPENSHIFT_MYSQL_DB_SOCKET'] %>
 # Disable reverse DNS resolving of gear ip BZ#1051348
@@ -54,6 +71,11 @@ innodb_lock_wait_timeout = 50
 
 [mysqld_safe]
 pid-file=<%= ENV['OPENSHIFT_MYSQL_DIR'] %>pid/mysql.pid
+## amgohan - start
+character-set-client-handshake = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] : 'TRUE' %>
+character-set-server = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] : 'latin1' %>
+collation-server = <%= ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] ? ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] : 'latin1_swedish_ci' %>
+## amgohan - end
 
 [mysqldump]
 quick
@@ -63,6 +85,9 @@ max_allowed_packet = 16M
 no-auto-rehash
 # Remove the next comment character if you are not familiar with SQL
 #safe-updates
+## amgohan - start
+default-character-set = <%= ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] ? ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] : 'utf8' %>
+## amgohan - end
 
 [myisamchk]
 key_buffer_size = 8M
