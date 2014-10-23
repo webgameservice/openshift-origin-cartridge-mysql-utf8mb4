@@ -1,5 +1,5 @@
 ---
-Name: mysql
+Name: mysql-utf8mb4
 Cartridge-Short-Name: MYSQL
 Architecture: noarch
 Display-Name: MySQL 5.5
