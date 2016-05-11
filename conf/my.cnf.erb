@@ -15,31 +15,23 @@
 # collation-server -> OPENSHIFT_MYSQL_COLLATION_SERVER
 ## amgohan - end
 
-## amgohan - start
+
 [client]
-default-character-set = <%= ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] ? ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] : 'utf8' %>
-## amgohan - end
+default-character-set = utf8mb4
 
 [mysqld]
-## amgohan - start
-character-set-client-handshake = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] : 'TRUE' %>
-character-set-server = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] : 'latin1' %>
-collation-server = <%= ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] ? ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] : 'latin1_swedish_ci' %>
-## amgohan - end
+init_connect='SET collation_connection = utf8mb4_general_ci'
+init_connect='SET NAMES utf8mb4' 
+character-set-server = utf8 
+collation-server = utf8_general_ci 
+skip-character-set-client-handshake
+
 
 datadir=<%= ENV['OPENSHIFT_MYSQL_DIR'] %>data/
 socket=<%= ENV['OPENSHIFT_MYSQL_DB_SOCKET'] %>
-# Disable reverse DNS resolving of gear ip BZ#1051348
 skip-name-resolve
 bind-address=<%= ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
-# Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
-<% if ENV['OPENSHIFT_MYSQL_IDENT'] =~ /:5\.5:/ %>
-# In case AIO subsystem failed to start, users can set the
-# OPENSHIFT_MYSQL_AIO environment variable to '0' to disable it
-# See: http://help.directadmin.com/item.php?id=529
-#innodb_use_native_aio = <%= ENV['OPENSHIFT_MYSQL_AIO'] || '1'%>
-<% end %>
 key_buffer_size = <%= ENV['OPENSHIFT_APP_DNS'] == ENV['OPENSHIFT_GEAR_DNS'] ? '32' : (ENV['OPENSHIFT_GEAR_MEMORY_MB'].to_i * 0.1).to_i %>M
 max_allowed_packet = 200M
 table_open_cache = <%= ENV['OPENSHIFT_MYSQL_TABLE_OPEN_CACHE'] ? ENV['OPENSHIFT_MYSQL_TABLE_OPEN_CACHE'] : '4' %>
@@ -53,30 +45,18 @@ lower_case_table_names = <%= ENV['OPENSHIFT_MYSQL_LOWER_CASE_TABLE_NAMES'] ? ENV
 <%= ENV['OPENSHIFT_MYSQL_FT_MIN_WORD_LEN'] ? "ft_min_word_len = #{ENV['OPENSHIFT_MYSQL_FT_MIN_WORD_LEN']}" : '' %>
 <%= ENV['OPENSHIFT_MYSQL_FT_MAX_WORD_LEN'] ? "ft_max_word_len = #{ENV['OPENSHIFT_MYSQL_FT_MAX_WORD_LEN']}" : '' %>
 
-innodb=OFF
-<%= ENV['OPENSHIFT_MYSQL_DEFAULT_STORAGE_ENGINE'] ? "default-storage-engine = #{ENV['OPENSHIFT_MYSQL_DEFAULT_STORAGE_ENGINE']}" : '' %>
+default-storage-engine = MyISAM
+default_tmp_storage_engine = MyISAM
+skip-innodb
 myisam_sort_buffer_size = 2M
 
 <%= ENV['OPENSHIFT_MYSQL_TIMEZONE'] ? "default-time-zone = '#{ENV['OPENSHIFT_MYSQL_TIMEZONE']}'" : '' %>
 
-#INNODB
-# You can set .._buffer_pool_size up to 50 - 80 %
-# of RAM but beware of setting memory usage too high
-#innodb_buffer_pool_size = <%= ENV['OPENSHIFT_APP_DNS'] == ENV['OPENSHIFT_GEAR_DNS'] ? 32 : (ENV['OPENSHIFT_GEAR_MEMORY_MB'].to_i * 0.5).to_i %>M
-#innodb_additional_mem_pool_size = 2M
-# Set .._log_file_size to 25 % of buffer pool size
-#innodb_log_file_size = <%= ENV['OPENSHIFT_APP_DNS'] == ENV['OPENSHIFT_GEAR_DNS'] ? 16 : (ENV['OPENSHIFT_GEAR_MEMORY_MB'].to_i * 0.15).to_i %>M
-#innodb_log_buffer_size = <%= ENV['OPENSHIFT_APP_DNS'] == ENV['OPENSHIFT_GEAR_DNS'] ? 16 : (ENV['OPENSHIFT_GEAR_MEMORY_MB'].to_i * 0.15).to_i %>M
-#innodb_flush_log_at_trx_commit = 1
-#innodb_lock_wait_timeout = 50
-
 [mysqld_safe]
 pid-file=<%= ENV['OPENSHIFT_MYSQL_DIR'] %>pid/mysql.pid
-## amgohan - start
-character-set-client-handshake = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_CLIENT_HANDSHAKE'] : 'TRUE' %>
-character-set-server = <%= ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] ? ENV['OPENSHIFT_MYSQL_CHARACTER_SET_SERVER'] : 'latin1' %>
-collation-server = <%= ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] ? ENV['OPENSHIFT_MYSQL_COLLATION_SERVER'] : 'latin1_swedish_ci' %>
-## amgohan - end
+character-set-server = utf8 
+collation-server = utf8_general_ci 
+skip-character-set-client-handshake
 
 [mysqldump]
 quick
@@ -84,11 +64,7 @@ max_allowed_packet = 16M
 
 [mysql]
 no-auto-rehash
-# Remove the next comment character if you are not familiar with SQL
-#safe-updates
-## amgohan - start
-default-character-set = <%= ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] ? ENV['OPENSHIFT_MYSQL_DEFAULT_CHARACTER_SET'] : 'utf8' %>
-## amgohan - end
+default-character-set = utf8mb4
 
 [myisamchk]
 key_buffer_size = 8M
@@ -98,4 +74,3 @@ sort_buffer_size = 8M
 
 [mysqlhotcopy]
 interactive-timeout
-
