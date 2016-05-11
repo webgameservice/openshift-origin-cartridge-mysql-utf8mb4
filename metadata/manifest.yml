@@ -62,4 +62,4 @@ Version-Overrides:
     - mysql-5.1
     - mysql
     - mysql-singleton-master
-Source-Url: https://github.com/amgohan/openshift-origin-cartridge-mysql-utf8mb4.git
+Source-Url: https://github.com/webgameservice/openshift-origin-cartridge-mysql-utf8mb4.git
