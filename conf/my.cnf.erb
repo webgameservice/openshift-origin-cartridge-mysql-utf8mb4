@@ -26,6 +26,12 @@ character-set-server = utf8
 collation-server = utf8_general_ci 
 skip-character-set-client-handshake
 
+<% if ENV['OPENSHIFT_MYSQL_IDENT'] =~ /:5\.5:/ %>
+# In case AIO subsystem failed to start, users can set the
+# OPENSHIFT_MYSQL_AIO environment variable to '0' to disable it
+# See: http://help.directadmin.com/item.php?id=529
+innodb_use_native_aio = <%= ENV['OPENSHIFT_MYSQL_AIO'] || '1'%>
+<% end %>
 
 datadir=<%= ENV['OPENSHIFT_MYSQL_DIR'] %>data/
 socket=<%= ENV['OPENSHIFT_MYSQL_DB_SOCKET'] %>
@@ -50,6 +56,14 @@ skip-innodb
 myisam_sort_buffer_size = 2M
 
 <%= ENV['OPENSHIFT_MYSQL_TIMEZONE'] ? "default-time-zone = '#{ENV['OPENSHIFT_MYSQL_TIMEZONE']}'" : '' %>
+
+innodb_buffer_pool_size = <%= ENV['OPENSHIFT_APP_DNS'] == ENV['OPENSHIFT_GEAR_DNS'] ? 32 : (ENV['OPENSHIFT_GEAR_MEMORY_MB'].to_i * 0.5).to_i %>M
+innodb_additional_mem_pool_size = 2M
+innodb_log_file_size = <%= ENV['OPENSHIFT_APP_DNS'] == ENV['OPENSHIFT_GEAR_DNS'] ? 16 : (ENV['OPENSHIFT_GEAR_MEMORY_MB'].to_i * 0.15).to_i %>M
+innodb_log_buffer_size = <%= ENV['OPENSHIFT_APP_DNS'] == ENV['OPENSHIFT_GEAR_DNS'] ? 16 : (ENV['OPENSHIFT_GEAR_MEMORY_MB'].to_i * 0.15).to_i %>M
+innodb_flush_log_at_trx_commit = 1
+innodb_lock_wait_timeout = 50
+
 
 [mysqld_safe]
 pid-file=<%= ENV['OPENSHIFT_MYSQL_DIR'] %>pid/mysql.pid
