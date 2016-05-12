@@ -52,7 +52,7 @@ lower_case_table_names = <%= ENV['OPENSHIFT_MYSQL_LOWER_CASE_TABLE_NAMES'] ? ENV
 <%= ENV['OPENSHIFT_MYSQL_FT_MAX_WORD_LEN'] ? "ft_max_word_len = #{ENV['OPENSHIFT_MYSQL_FT_MAX_WORD_LEN']}" : '' %>
 
 default-storage-engine = MyISAM
-skip-innodb
+#skip-innodb
 myisam_sort_buffer_size = 2M
 
 <%= ENV['OPENSHIFT_MYSQL_TIMEZONE'] ? "default-time-zone = '#{ENV['OPENSHIFT_MYSQL_TIMEZONE']}'" : '' %>
